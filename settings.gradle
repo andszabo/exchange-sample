@@ -1,0 +1,8 @@
+rootProject.name = 'exchange-sample'
+
+include 'exchange-api'
+include 'exchange-domain'
+include 'exchange-akka'
+include 'exchange-boot'
+//include 'exchange-play'
+

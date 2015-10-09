@@ -1,0 +1,6 @@
+.gradle
+.idea
+exchange-akka/build
+exchange-api/build
+exchange-boot/build
+exchange-domain/build

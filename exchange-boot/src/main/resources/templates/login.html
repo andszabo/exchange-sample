@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>Simple Exchange</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css" />
+</head>
+<body>
+<div class="page-header" th:replace="fragments/header :: header" >
+    <h1>Simple Exchange</h1>
+</div>
+<div class="container">
+    <form class="form-signin" th:action="@{/login}" method="post">
+        <div th:if="${param.error}" class="alert alert-danger">
+            Invalid username or password.
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success">
+            You have been logged out.
+        </div>
+        <h3 class="muted form-signin-heading">Please sign in</h3>
+
+        <div><label> User Name : <input type="text" name="username" class="form-control"/> </label></div>
+        <div><label> Password: <input type="password" name="password" class="form-control"/> </label></div>
+        <div><input type="submit" value="Sign In" class="btn btn-primary"/></div>
+        <hr/>
+        <p class="text-info">
+            <small>
+                Log in as <strong>user1/user1</strong> to <strong>user9/user9</strong><br/>
+            </small>
+        </p>
+    </form>
+</div>
+</body>
+</html>

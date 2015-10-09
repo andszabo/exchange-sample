@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav class="navbar navbar-default" th:fragment="header">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Simple Exchange</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right" th:if="${#httpServletRequest.remoteUser != null}">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false"><span th:text="${#httpServletRequest.remoteUser}">User</span> <b
+                            class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <form th:action="@{/logout}" method="post" class="navbar-form" role="singout"
+                                  th:if="${#httpServletRequest.remoteUser != null}" id="logout">
+                            </form>
+                            <a href="#" onclick="document.getElementById('logout').submit();">Sign Out</a>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#descriptionModal">Matching rules</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      lang="en" ng-app="exchangeApp">
+<head>
+    <title>Simple Exchange</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css" />
+
+</head>
+<body ng-controller="ExchangeController">
+<div  th:replace="fragments/description :: description">
+
+</div>
+<div class="page-header" th:replace="fragments/header :: header">
+    <h1>Simple Exchange</h1>
+</div>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+    enabled. Please enable Javascript and reload this page!</h2></noscript>
+<div class="alert alert-danger alert-dismissible" role="alert" ng-show="errorMessage">
+    <button type="button" class="close" aria-label="Close" ng-click="dismissError()"><span
+            aria-hidden="true">&times;</span></button>
+    {{errorMessage}}
+</div>
+<div class="container">
+    <input type="hidden" id="user" th:value="${#httpServletRequest.remoteUser}"/>
+
+    <div class="form-inline">
+        <div ng-hide="instrumentSelected">
+            <form ng-submit="setInstrument()">
+                <div class="form-group">
+                    <label for="instrument"> Instrument </label>
+                    <input type="text" class="form-control" id="instrument" ng-model="instrumentId"/>
+                </div>
+                <button id="selectInstrument" class="btn btn-default">Select</button>
+            </form>
+        </div>
+        <div ng-show="instrumentSelected">
+            <div class="form-group">
+                <label for="instrumentRo"> Instrument </label>
+                <input type="text" class="form-control" id="instrumentRo" ng-model="instrumentId" readonly="readonly"/>
+            </div>
+            <button id="changeInstrument" ng-click="reset()" class="btn btn-default">Change</button>
+            <div class="form-group">
+                <label for="avgPriceField"> Avg. price </label>
+                <input type="text" class="form-control" id="avgPriceField" ng-model="avgPrice" readonly="readonly"/>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="instrumentSelected">
+        <h3>My orders</h3>
+
+        <div class="form-inline" ng-show="instrumentSelected">
+            New
+            <div class="form-group">
+                <label for="direction" class="sr-only"> Direction </label>
+                <select class="form-control" id="direction" ng-model="currentOrder.direction">
+                    <option>Buy</option>
+                    <option>Sell</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantity" class="sr-only"> Quantity </label>
+                <input type="number" id="quantity" class="form-control" ng-model="currentOrder.quantity"/>
+            </div>
+            <div class="form-group">
+                @ <label for="price" class="sr-only"> Price </label>
+                <input type="number" id="price" class="form-control" ng-model="currentOrder.price"/>
+            </div>
+            <button id="placeOrder" ng-click="placeOrder()" class="btn btn-default">Send</button>
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Direction</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Time</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="order in orders">
+                <td>{{order.id}}</td>
+                <td>{{order.direction}}</td>
+                <td>{{order.quantity}}</td>
+                <td>{{order.price}}</td>
+                <td>{{order.creationTime | date:'medium'}}</td>
+                <td>{{order.status}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-show="instrumentSelected">
+        <h3>My trades</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Direction</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="trade in trades">
+                <td>{{trade.id}}</td>
+                <td>{{trade.direction}}</td>
+                <td>{{trade.quantity}}</td>
+                <td>{{trade.price}}</td>
+                <td>{{trade.creationTime | date:'medium'}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="/webjars/jquery/2.1.4/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/1.0.2/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
+<script src="/webjars/angularjs/1.4.7/angular.min.js"></script>
+<script src="/webjars/bootstrap/3.3.5/js/dropdown.js"></script>
+<script src="/webjars/bootstrap/3.3.5/js/modal.js"></script>
+
+<script src="assets/javascripts/app.js"></script>
+<script src="assets/javascripts/controllers.js"></script>
+<script src="assets/javascripts/services.js"></script>
+</body>
+</html>
