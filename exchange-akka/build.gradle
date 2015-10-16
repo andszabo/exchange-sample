@@ -10,7 +10,7 @@ dependencies {
     compile "com.typesafe.akka:akka-cluster-tools_2.11:$akkaVersion"
 
     compile "com.typesafe.akka:akka-persistence_2.11:$akkaVersion"
-    compile "com.github.scullxbones:akka-persistence-mongo-rxmongo_2.11:1.0.5"
+    compile "com.github.scullxbones:akka-persistence-mongo-rxmongo_2.11:1.0.8"
     runtime "org.reactivemongo:reactivemongo_2.11:0.11.6"
     runtime "com.typesafe.play:play-iteratees_2.11:2.3.10"
 
